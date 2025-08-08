@@ -3,10 +3,13 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import Lead from "./models/Lead.js";
+import path from "path"
+
 
 dotenv.config();
 const app = express();
 
+const _dirname = path.resolve()
 // Middleware
 app.use(express.json());
 
@@ -23,7 +26,7 @@ app.options("*", cors());
 
 //  Connect DB
 connectDB();
-let leads = []
+
 
 // Routes
 app.get("/", (req, res) => res.send("🚀 Growly backend running!"));
@@ -50,6 +53,10 @@ app.get("/api/leads", async (req, res) => {
   }
 });
 
+app.use(express.static(path.join(_dirname, "/client/dist")))
+app.get('*',(_,res)=>{
+  res.sendFile(path.resolve(_dirname,"client","dist","index.html"))
+})
 
 // Start server
 const PORT = process.env.PORT || 8000;
