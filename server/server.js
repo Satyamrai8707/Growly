@@ -9,33 +9,27 @@ import { fileURLToPath } from "url";
 dotenv.config();
 const app = express();
 
-// Middleware
-app.use(express.json());
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// Proper CORS setup
+app.use(express.json());
 app.use(cors({
   origin: "*",
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"]
 }));
-
-// Handle preflight requests explicitly
 app.options("*", cors());
 
-// Connect DB
 connectDB();
 
-// API Routes
 app.get("/", (req, res) => res.send("🚀 Growly backend running!"));
 
 app.post("/api/leads", async (req, res) => {
-  console.log("📩 Lead POST request received:", req.body);
   try {
     const lead = new Lead(req.body);
     await lead.save();
     res.status(201).json({ message: "Lead saved successfully!" });
   } catch (err) {
-    console.error("Error saving lead:", err);
     res.status(500).json({ message: err.message });
   }
 });
@@ -45,26 +39,23 @@ app.get("/api/leads", async (req, res) => {
     const leads = await Lead.find({});
     res.json(leads);
   } catch (err) {
-    console.error("Error fetching leads:", err);
     res.status(500).json({ message: "Failed to fetch leads" });
   }
 });
 
-// React app serving and routing fallback
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 app.use(express.static(path.join(__dirname, "build")));
 
-// Updated fallback route — exclude /api routes
-app.get("*", (req, res) => {
+app.use((req, res, next) => {
   if (req.path.startsWith("/api")) {
-    // If API route not matched above, send 404 JSON response
-    return res.status(404).json({ message: "API route not found" });
+    return next();
   }
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-// Start server
+// API 404 handler
+app.use("/api", (req, res) => {
+  res.status(404).json({ message: "API route not found" });
+});
+
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
