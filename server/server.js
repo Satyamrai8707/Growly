@@ -56,7 +56,12 @@ const __dirname = path.dirname(__filename);
 
 app.use(express.static(path.join(__dirname, "build")));
 
+// Updated fallback route — exclude /api routes
 app.get("*", (req, res) => {
+  if (req.path.startsWith("/api")) {
+    // If API route not matched above, send 404 JSON response
+    return res.status(404).json({ message: "API route not found" });
+  }
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
