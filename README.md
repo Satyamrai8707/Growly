@@ -1,25 +1,45 @@
 # Growly - AI-Powered Ad Generator & Lead Capture
 
-# Growly
+Growly is a modern React web application designed to help users create high-converting ads quickly using AI-generated content. It features a responsive lead capture form and an admin dashboard to manage submitted leads. The app supports light/dark mode toggle for an enhanced user experience.
 
-Growly is a modern React web application designed to help users create high-converting ads quickly using AI-generated content. It includes a lead capture form and an admin dashboard to manage submitted leads. The app features a light/dark mode toggle for a better user experience.
+---
+
+## Table of Contents
+
+- [Tech Stack](#tech-stack)
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Installation & Local Setup](#installation--local-setup)
+  - [1. Clone the repository](#1-clone-the-repository)
+  - [2. Backend Setup](#2-backend-setup)
+  - [3. Frontend Setup](#3-frontend-setup)
+- [Environment Variables](#environment-variables)
+- [Usage](#usage)
+- [Deployment Suggestions](#deployment-suggestions)
+- [Project Structure](#project-structure)
+- [Dependencies](#dependencies)
+- [Troubleshooting](#troubleshooting)
+- [Contribution](#contribution)
+- [License](#license)
+- [Contact](#contact)
+- [Hosted Links](#hosted-links)
 
 ---
 
 ## Tech Stack
 
-- **Frontend:**
-  - React 18+
-  - React Router v6
-  - Tailwind CSS for styling and responsive design
-  - React Icons for icons
-  - React Toastify for toast notifications
+### Frontend
+- React 18+
+- React Router v6
+- Tailwind CSS for styling and responsive design
+- React Icons for icons
+- React Toastify for toast notifications
 
-- **Backend:**
-  - Node.js with Express.js
-  - MongoDB with Mongoose ODM
-  - CORS middleware for cross-origin requests
-  - dotenv for environment variable management
+### Backend
+- Node.js with Express.js
+- MongoDB with Mongoose ODM
+- CORS middleware for cross-origin requests
+- dotenv for environment variable management
 
 ---
 
@@ -35,11 +55,9 @@ Growly is a modern React web application designed to help users create high-conv
 
 ## Prerequisites
 
-Make sure you have installed:
-
-- Node.js (v16 or later recommended) — [Download Node.js](https://nodejs.org/)
-- npm (comes with Node.js)
-- MongoDB (locally or a cloud-hosted MongoDB URI, e.g., MongoDB Atlas)
+- [Node.js](https://nodejs.org/) (v16 or later recommended)
+- npm (comes bundled with Node.js)
+- MongoDB (local installation or cloud-hosted, e.g., MongoDB Atlas)
 
 ---
 
@@ -48,146 +66,150 @@ Make sure you have installed:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/growly.git
+git clone https://github.com/Satyamrai8707/Growly.git
 cd growly
-2. Backend Setup
-bash
-Copy
-Edit
-cd backend  # or root folder if both frontend/backend combined
+```
+### 2. Backend Setup
+
+```bash
+cd backend
 npm install
-Create a .env file inside the backend folder with the following content:
+```
 
-ini
-Copy
-Edit
-MONGO_URI=<Your MongoDB connection string>
-PORT=8000
+Create a ***.env*** file inside the backend folder with the following:
+
+```bash
+MONGO_URI=mongodb+srv://satyamrai8707:lUUOGzrqOmxNSmIV@cluster0.ujthmuo.mongodb.net/growly?retryWrites=true&w=majority&appName=Cluster0
+PORT=9000
+```
 Start the backend server:
-
-bash
-Copy
-Edit
+```bash
 npm start
-The backend server should be running on http://localhost:8000.
+```
+The backend server will be running at http://localhost:9000.
 
-3. Frontend Setup
-Open a new terminal window/tab and run:
+### 3. Frontend Setup
+Open a new terminal window/tab:
 
-bash
-Copy
-Edit
+```bash
 cd client
 npm install
 npm start
-The React development server will start on http://localhost:3000.
+```
+The React development server will start at http://localhost:3000.
 
-Environment Variables
-Backend .env file example:
+## Environment Variables
 
-ini
-Copy
-Edit
-MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/growly?retryWrites=true&w=majority
-PORT=8000
-Frontend environment variables (optional if you want to configure API base URL dynamically):
+Backend .env example:
+```bash
+MONGO_URI=mongodb+srv://satyamrai8707:lUUOGzrqOmxNSmIV@cluster0ujthmuo.mongodb.net/growly?retryWrites=true&w=majority&appName=Cluster0
+PORT=9000
+```
 
-ini
-Copy
-Edit
-REACT_APP_API_BASE_URL=http://localhost:8000
-Update your API calls accordingly to use this variable.
+Frontend environment variables (optional):
+```bash
+REACT_APP_API_BASE_URL=http://localhost:9000
+```
+Make sure your frontend API calls use this base URL accordingly.
 
-Usage
-Visit http://localhost:3000 to use the main app.
+## Usage
 
-Submit leads via the form.
+- Visit http://localhost:3000 to use the main app.
 
-Visit http://localhost:3000/admin/leads to view submitted leads in the admin dashboard.
+- Submit leads via the lead capture form.
 
-Toggle between light and dark modes using the icon button in the header.
+- Visit http://localhost:3000/admin/leads to view submitted leads in the admin dashboard.
 
-Deployment Suggestions
-Backend: Deploy your Express API to platforms like Render, Heroku, Railway, or DigitalOcean.
+- Toggle between light and dark modes using the icon button in the header.
 
-Frontend: Deploy React app on Vercel, Netlify, or similar.
+## Deployment
 
-Update the frontend API base URL to point to your live backend in production.
+- Backend: Deploy the Express API to platforms like Render, Heroku, Railway, or DigitalOcean.
 
-Project Structure (Typical)
-lua
-Copy
-Edit
-/backend
-  |-- models/
-  |-- routes/
-  |-- config/
-  |-- server.js (or app.js)
-  |-- package.json
-  |-- .env
+- Frontend: Deploy the React app on Vercel, Netlify, or similar.
+
+## Project Structure
+
+```bash
+/server
+  ├── models/           # Mongoose models (e.g., Lead.js)
+  ├── routes/           # Express route handlers (e.g., leads.js)
+  ├── config/           # DB and other config files
+  ├── server.js         # Express app entry point
+  ├── package.json
+  ├── controllers/  
+  ├── package.json
+  └── .env              # Environment variables
 
 /client
-  |-- src/
-       |-- components/
-       |-- context/
-       |-- api.js
-       |-- App.jsx
-  |-- public/
-  |-- package.json
-Dependencies Used
-Backend
-express
+  ├── src/
+  │    ├── components/  # React components
+  │    ├── context/     # Context providers (e.g., DarkModeContext)
+  │    ├── api.js       # API helper functions
+  │    └── App.jsx      # Root React component
+  ├── public/           # Static files like index.html
+  └── package.json
+  
 
-mongoose
+```
 
-cors
+## Dependencies
 
-dotenv
+### Backend
+- **express**
 
-Frontend
-react
+- **mongoose**
 
-react-dom
+- **cors**
 
-react-router-dom
+- **dotenv**
 
-tailwindcss
+### Frontend
+- **react**
 
-postcss
+- **react-dom**
 
-autoprefixer
+- **react-router-dom**
 
-react-icons
+- **tailwindcss**
 
-react-toastify
+- **postcss**
 
-Troubleshooting
-react-scripts: command not found - Run npm install inside your React client folder.
+- **autoprefixer**
 
-CORS errors - Ensure backend CORS middleware is properly configured.
+- **react-icons**
 
-MongoDB connection issues - Double-check your MONGO_URI string and internet connectivity.
+- **react-toastify**
 
-Contribution
-Feel free to fork the repo and submit pull requests. For major changes, please open an issue first to discuss what you would like to change.
 
-License
+## Troubleshooting
+
+- ***react-scripts: command not found***
+Run ***npm install*** inside your React client folder.
+
+- **CORS errors**
+Ensure backend CORS middleware is properly configured and enabled.
+
+- **MongoDB connection issues**
+Double-check your ***MONGO_URI*** string and internet connectivity.
+
+## Contribution
+
+Contributions are welcome! Feel free to fork the repository and submit pull requests. For major changes, please open an issue first to discuss your plans.
+
+## License
 This project is licensed under the MIT License.
 
-Contact
-For questions or support, open an issue or contact the maintainer at your.email@example.com
 
-Hosted Links
-Frontend: [Add your live frontend URL here]
+## Contact
+For questions or support, open an issue or contact the maintainer at satyamrai8707@gmail.com
 
-Backend API: [Add your live backend API URL here]
+## Hosted Links
+Frontend: https://growly.netlify.app/
 
-Thanks for checking out Growly! 🚀
+Backend API: https://growly-backend-csbz.onrender.com
 
-yaml
-Copy
-Edit
 
----
+Thank you for checking out Growly! 🚀
 
-If you want, I can also help you generate `package.json` scripts or config files. Just ask!
+
