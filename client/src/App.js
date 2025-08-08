@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { FaSun, FaMoon } from "react-icons/fa";
 import Hero from "./components/Hero";
 import HowItWorks from "./components/HowItWorks";
